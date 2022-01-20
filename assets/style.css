@@ -34,6 +34,7 @@ button {
   display: flex;
   justify-content: flex-end;
   border-style: groove;
+  overflow: hidden;
 }
 
 #display {
