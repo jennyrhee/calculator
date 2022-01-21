@@ -17,15 +17,23 @@ function clear() {
 }
 
 function operate(operator, a, b) {
+  let result;
   switch (operator) {
     // hex codes
-    case ('\x2b'): return a + b;
-    case ('\u2212'): return a - b;
-    case ('\xD7'): return a * b;
+    case ('\x2b'):
+      result = a + b;
+      break;
+    case ('\u2212'): 
+      result = a - b;
+      break;
+    case ('\xD7'): 
+      result = a * b;
+      break;
     case ('\xF7'):
       if (b === 0) return 'Bad. Divide by 0 error.';
-      else return a / b;
+      else result = a / b;
   }
+  return Number.isInteger(result) ? result : result.toFixed(4)
 }
 
 const calc = {
