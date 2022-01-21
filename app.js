@@ -44,7 +44,8 @@ const calc = {
   needsNextOperand: false,
   numberButtons: document.querySelectorAll('.number-btn'),
   operatorButtons: document.querySelectorAll('.operator-btn'),
-  clearButton: document.getElementById('clear-btn')
+  clearButton: document.getElementById('clear-btn'),
+  deleteButton: document.getElementById('delete-btn')
 };
 
 calc.numberButtons.forEach(btn => btn.addEventListener('click', () => {
@@ -88,3 +89,7 @@ calc.operatorButtons.forEach(btn => btn.addEventListener('click', () => {
 }));
 
 calc.clearButton.addEventListener('click', clear);
+calc.deleteButton.addEventListener('click', () => {
+  calc.output = calc.output.slice(0, -1);
+  displayOutput();
+})
