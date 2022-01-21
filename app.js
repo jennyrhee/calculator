@@ -4,6 +4,11 @@ function displayOutput() {
   document.getElementById('decimal-btn').disabled = calc.output.toString().includes('.');
 }
 
+function backspace() {
+  calc.output = calc.output.toString().slice(0, -1);
+  displayOutput();
+}
+
 function clearOutput() {
   calc.output = '';
   displayOutput();
@@ -94,12 +99,10 @@ const deleteButton = document.getElementById('delete-btn');
 numberButtons.forEach(btn => btn.addEventListener('click', () => determineDisplay(btn.textContent)))
 operatorButtons.forEach(btn => btn.addEventListener('click', () => determineCalculation(btn.textContent)));
 clearButton.addEventListener('click', clear);
-deleteButton.addEventListener('click', () => {
-  calc.output = calc.output.slice(0, -1);
-  displayOutput();
-})
+deleteButton.addEventListener('click', backspace);
 document.addEventListener('keydown', (e) => {
   let key = e.key === 'Enter' ? '=' : e.key;
   if (/\d/.test(key)) determineDisplay(key);
   else if (/[+=\-\/*%]/.test(key)) determineCalculation(key);
+  else if (key === 'Backspace') backspace();
 })
