@@ -36,31 +36,19 @@ function operate(operator, a, b) {
   return Number.isInteger(result) ? result : result.toFixed(4)
 }
 
-const calc = {
-  lastInput: null,
-  output: '',
-  total: null,
-  operator: null,
-  needsNextOperand: false,
-  numberButtons: document.querySelectorAll('.number-btn'),
-  operatorButtons: document.querySelectorAll('.operator-btn'),
-  clearButton: document.getElementById('clear-btn'),
-  deleteButton: document.getElementById('delete-btn')
-};
-
-calc.numberButtons.forEach(btn => btn.addEventListener('click', () => {
+function determineDisplay() {
   // if last input was =, also clear i.e., resets calculator
   if (calc.needsNextOperand || calc.lastInput === '=') {
     calc.needsNextOperand = false;
     clearOutput();
   }
-  calc.output += btn.textContent;
-  calc.lastInput = btn.textContent;
+  calc.output += this.textContent;
+  calc.lastInput = this.textContent;
   displayOutput();
-}))
+}
 
-calc.operatorButtons.forEach(btn => btn.addEventListener('click', () => {
-  let operator = btn.textContent;
+function determineCalculation() {
+  let operator = this.textContent;
   let output = Number(calc.output);
   clearOutput();
 
@@ -85,9 +73,22 @@ calc.operatorButtons.forEach(btn => btn.addEventListener('click', () => {
   }
   displayOutput();
   calc.lastInput = operator;
-  console.table(calc);
-}));
+}
 
+const calc = {
+  lastInput: null,
+  output: '',
+  total: null,
+  operator: null,
+  needsNextOperand: false,
+  numberButtons: document.querySelectorAll('.number-btn'),
+  operatorButtons: document.querySelectorAll('.operator-btn'),
+  clearButton: document.getElementById('clear-btn'),
+  deleteButton: document.getElementById('delete-btn')
+};
+
+calc.numberButtons.forEach(btn => btn.addEventListener('click', determineDisplay))
+calc.operatorButtons.forEach(btn => btn.addEventListener('click', determineCalculation));
 calc.clearButton.addEventListener('click', clear);
 calc.deleteButton.addEventListener('click', () => {
   calc.output = calc.output.slice(0, -1);
