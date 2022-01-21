@@ -8,6 +8,13 @@ function clearOutput() {
   displayOutput();
 }
 
+function clear() {
+  clearOutput();
+  for (let attr of ['lastInput', 'operator', 'needsNextOperand']) {
+    calc[attr] = null;
+  }
+}
+
 function operate(operator, a, b) {
   switch (operator) {
     // hex codes
@@ -66,4 +73,4 @@ calc.operatorButtons.forEach(btn => btn.addEventListener('click', () => {
   console.table(calc);
 }));
 
-calc.clearButton.addEventListener('click', clearOutput);
+calc.clearButton.addEventListener('click', clear);
