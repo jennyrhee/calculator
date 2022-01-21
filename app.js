@@ -1,6 +1,7 @@
 function displayOutput() {
   let display = document.getElementById('display');
   display.textContent = calc.output;
+  document.getElementById('decimal-btn').disabled = calc.output.toString().includes('.');
 }
 
 function clearOutput() {
