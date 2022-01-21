@@ -21,7 +21,9 @@ function operate(operator, a, b) {
     case ('\x2b'): return a + b;
     case ('\u2212'): return a - b;
     case ('\xD7'): return a * b;
-    case ('\xF7'): return a / b;
+    case ('\xF7'):
+      if (b === 0) return 'Bad. Divide by 0 error.';
+      else return a / b;
   }
 }
 
