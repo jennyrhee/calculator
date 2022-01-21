@@ -21,14 +21,15 @@ function operate(operator, a, b) {
 const calc = {
   output: '',
   total: 0,
-  operator: null
+  operator: null,
+  numberButtons: document.querySelectorAll('.number-btn'),
+  operatorButtons: document.querySelectorAll('.operator-btn'),
+  clearButton: document.getElementById('clear-btn')
 };
 
-const numberButtons = document.querySelectorAll('.number-btn');
-numberButtons.forEach(btn => btn.addEventListener('click', () => {
+calc.numberButtons.forEach(btn => btn.addEventListener('click', () => {
   calc.output += btn.textContent;
   displayOutput();
 }))
 
-const clearButton = document.getElementById('clear-btn');
-clearButton.addEventListener('click', clearOutput);
+calc.clearButton.addEventListener('click', clearOutput);
