@@ -11,12 +11,16 @@ function clearOutput() {
 
 function clear() {
   clearOutput();
-  for (let attr of ['lastInput', 'operator', 'needsNextOperand']) {
+  for (let attr of ['lastInput', 'total', 'operator', 'needsNextOperand']) {
     calc[attr] = null;
   }
 }
 
 function operate(operator, a, b) {
+  operator = operator === '-' ? '\u2212' :
+             operator === '*' ? '\xD7' :
+             operator === '/' ? '\xF7' :
+             operator;
   let result;
   switch (operator) {
     // hex codes
@@ -36,19 +40,18 @@ function operate(operator, a, b) {
   return Number.isInteger(result) ? result : result.toFixed(4)
 }
 
-function determineDisplay() {
+function determineDisplay(input) {
   // if last input was =, also clear i.e., resets calculator
   if (calc.needsNextOperand || calc.lastInput === '=') {
     calc.needsNextOperand = false;
     clearOutput();
   }
-  calc.output += this.textContent;
-  calc.lastInput = this.textContent;
+  calc.output += input;
+  calc.lastInput = input;
   displayOutput();
 }
 
-function determineCalculation() {
-  let operator = this.textContent;
+function determineCalculation(operator) {
   let output = Number(calc.output);
   clearOutput();
 
@@ -58,8 +61,8 @@ function determineCalculation() {
   } else if (!calc.operator) {
     calc.total = output;
     calc.operator = operator;
-  }
-  // if last input was operator (except =), update operator
+    calc.needsNextOperand = true;
+  } // if last input was operator (except =), update operator
   else if (/[^=\d]/.test(calc.lastInput)) calc.operator = operator;
   // if lastInput was also =, breaks the operate function
   else if (operator === '=' && calc.lastInput !== '=') {
@@ -87,10 +90,16 @@ const numberButtons = document.querySelectorAll('.number-btn');
 const operatorButtons = document.querySelectorAll('.operator-btn');
 const clearButton = document.getElementById('clear-btn');
 const deleteButton = document.getElementById('delete-btn');
-numberButtons.forEach(btn => btn.addEventListener('click', determineDisplay))
-operatorButtons.forEach(btn => btn.addEventListener('click', determineCalculation));
+
+numberButtons.forEach(btn => btn.addEventListener('click', () => determineDisplay(btn.textContent)))
+operatorButtons.forEach(btn => btn.addEventListener('click', () => determineCalculation(btn.textContent)));
 clearButton.addEventListener('click', clear);
 deleteButton.addEventListener('click', () => {
   calc.output = calc.output.slice(0, -1);
   displayOutput();
+})
+document.addEventListener('keydown', (e) => {
+  let key = e.key === 'Enter' ? '=' : e.key;
+  if (/\d/.test(key)) determineDisplay(key);
+  else if (/[+=\-\/*%]/.test(key)) determineCalculation(key);
 })
