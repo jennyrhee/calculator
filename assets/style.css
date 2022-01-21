@@ -3,16 +3,19 @@ body {
   padding: 0;
   font-family: monospace;
   text-align: center;
+  background-color: lightgray;
 }
 
 button {
   height: 50px;
   width: 50px;
   font-family: monospace;
+  background-color: #9d8189;
 }
 
 .header {
   font-size: 32px;
+  margin-top: 10px;
   margin-bottom: 50px;
 }
 
@@ -27,7 +30,7 @@ button {
 }
 
 .display-container {
-  background-color: lightgray;
+  background-color: #ffe5d9;
   width: 196px;
   height: 50px;
   font-size: 16px;
@@ -44,4 +47,17 @@ button {
 
 #zero-btn {
   width: 100px;
+}
+
+#clear-btn,
+#delete-btn {
+  background-color: #f4acb7;
+}
+
+.operator-btn {
+  background-color: #d8e2dc;
+}
+
+#perc-btn {
+  background-color: #ffcad4;
 }
