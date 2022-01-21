@@ -63,12 +63,15 @@ calc.operatorButtons.forEach(btn => btn.addEventListener('click', () => {
   let output = Number(calc.output);
   clearOutput();
 
-  if (!calc.operator) {
+  if (operator === '%') {
+    calc.output = operate('\xF7', output, 100);
+    calc.operator = null;
+  } else if (!calc.operator) {
     calc.total = output;
     calc.operator = operator;
   }
   // if last input was operator (except =), update operator
-  else if (/[^=\d]/.test(calc.lastInput)) calc.operator = operator; 
+  else if (/[^=\d]/.test(calc.lastInput)) calc.operator = operator;
   // if lastInput was also =, breaks the operate function
   else if (operator === '=' && calc.lastInput !== '=') {
     calc.output = operate(calc.operator, calc.total, output);
